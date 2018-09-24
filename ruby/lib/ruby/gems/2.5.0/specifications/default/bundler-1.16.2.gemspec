@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib".freeze]
   s.authors = ["Andr\u00E9 Arko".freeze, "Samuel Giddins".freeze, "Chris Morris".freeze, "James Wen".freeze, "Tim Moore".freeze, "Andr\u00E9 Medeiros".freeze, "Jessica Lynn Suttles".freeze, "Terence Lee".freeze, "Carl Lerche".freeze, "Yehuda Katz".freeze]
   s.bindir = "exe".freeze
-  s.date = "2018-09-21"
+  s.date = "2018-09-24"
   s.description = "Bundler manages an application's dependencies through its entire life, across many machines, systematically and repeatably".freeze
   s.email = ["team@bundler.io".freeze]
   s.executables = ["bundle".freeze]
