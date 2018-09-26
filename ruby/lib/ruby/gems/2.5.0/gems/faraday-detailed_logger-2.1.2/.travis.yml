@@ -1,0 +1,22 @@
+before_install: gem install bundler -v 1.15.4
+cache: bundler
+gemfile:
+  - gemfiles/faraday_0.8.gemfile
+  - gemfiles/faraday_0.9.gemfile
+  - gemfiles/faraday_0.10.gemfile
+  - gemfiles/faraday_0.11.gemfile
+  - gemfiles/faraday_0.12.gemfile
+  - gemfiles/faraday_0.13.gemfile
+  - gemfiles/faraday_canary.gemfile
+language: ruby
+matrix:
+  allow_failures:
+    - gemfile: gemfiles/faraday_canary.gemfile
+  fast_finish: true
+notifications:
+  email: false
+rvm:
+  - 2.2.7
+  - 2.3.4
+  - 2.4.1
+sudo: false

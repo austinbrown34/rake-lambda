@@ -6,14 +6,17 @@ end
 
 task :ny_ontario do
     puts 'taskypoo'
-    require 'curb'
+    require 'rest-client'
     require 'csv'
     require 'nokogiri'
-    root = "ny_ontario_county_bar"
+    require 'pg'
+    root = "/tmp/ny_ontario_county_bar"
     FileUtils.mkdir_p(root)
     url = "https://www.ontariocountybar.org/member-list.html"
-    http = Curl.get(url)
-    File.open("#{root}/all.html", "w"){ |file| file.write(http.body_str.encode('utf-8', :invalid => :replace, :undef => :replace, :replace => '_'))}
+    # http = RestClient.get(url)
+    conn = PG::Connection.open(:dbname => 'test')
+    http = RestClient::Request.execute(:url => url, :method => :get, :verify_ssl => false)
+    File.open("#{root}/all.html", "w"){ |file| file.write(http.body.encode('utf-8', :invalid => :replace, :undef => :replace, :replace => '_'))}
     CSV.open("#{root}/ny_ontario.csv", "w") do |csv|
         csv << [:name, :email, :address, :phone, :fax, :website, :firm, :source_url, :blocked_domain]
         # blocked_domains = BlockedDomain.where('category in (?)', ['Free Email']).load
@@ -59,6 +62,7 @@ task :ny_ontario do
                 end
             end
             csv << [contact_info[:name], contact_info[:email], contact_info[:address], contact_info[:phone], contact_info[:fax], contact_info[:website], contact_info[:firm], url, 'true']
+            puts [contact_info[:name], contact_info[:email], contact_info[:address], contact_info[:phone], contact_info[:fax], contact_info[:website], contact_info[:firm], url, 'true']
             # create_or_update_county_bar_contact(contact_info[:email], contact_info[:name], blocked_domains, "New York", url, div.text)
         end
     end
